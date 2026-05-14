@@ -49,10 +49,12 @@ module Base64 {
 
 
 
-  private param alphabet = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  private param alphabet =
+    b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   private param padding = b"=";
 
-  private proc b64EncodeImpl(x: bytes, param plus = b"+", param slash = b"/"): bytes {
+  private proc b64EncodeImpl(x: bytes,
+                             param plus = b"+", param slash = b"/"): bytes {
     const len = x.size;
     if len == 0 then return b"";
 
@@ -92,13 +94,15 @@ module Base64 {
     return result;
   }
 
-  private proc encodeChar(idx: int, param plus: bytes, param slash: bytes): bytes {
+  private proc encodeChar(idx: int,
+                          param plus: bytes, param slash: bytes): bytes {
     if idx < 62 then return alphabet.item[idx];
     else if idx == 62 then return plus;
     else return slash;
   }
 
-  private proc decodeChar(ch: uint(8), param plus: bytes, param slash: bytes): int {
+  private proc decodeChar(ch: uint(8),
+                          param plus: bytes, param slash: bytes): int {
     if ch >= 0x41 && ch <= 0x5A then return (ch - 0x41): int;        // A-Z
     else if ch >= 0x61 && ch <= 0x7A then return (ch - 0x61 + 26): int; // a-z
     else if ch >= 0x30 && ch <= 0x39 then return (ch - 0x30 + 52): int; // 0-9
@@ -107,7 +111,8 @@ module Base64 {
     else return -1; // padding or invalid
   }
 
-  private proc b64DecodeImpl(x: bytes, param plus = b"+", param slash = b"/"): bytes {
+  private proc b64DecodeImpl(x: bytes,
+                             param plus = b"+", param slash = b"/"): bytes {
     const len = x.size;
     if len == 0 then return b"";
 
